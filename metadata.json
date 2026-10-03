@@ -1,0 +1,7 @@
+{
+  "name": "GPSOFT Store & Enterprise CMS",
+  "description": "Hệ thống Website bán hàng công nghệ & CMS quản trị toàn diện: Quản lý sản phẩm, biến thể, đơn hàng, khách hàng, leads, tin tức, dịch vụ, file manager và SEO.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

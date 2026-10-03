@@ -1,0 +1,71 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+@theme {
+  --font-sans: 'Be Vietnam Pro', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Be Vietnam Pro', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  --color-primary: #1C86EE;
+  --color-primary-hover: #1472CE;
+  --color-primary-dark: #0d5bb0;
+  --color-primary-light: #EBF4FD;
+  --color-secondary: #5CACEE;
+  --color-secondary-hover: #489bdf;
+  --color-secondary-light: #F0F7FE;
+  --color-canvas: #FFFFE8;
+  --color-canvas-muted: #FFFEEF;
+  --color-surface: #FFFFFF;
+  --color-ink: #111827;
+  --color-ink-muted: #4B5563;
+
+  /* Brand Overrides for Blue Family */
+  --color-blue-50: #f0f7fe;
+  --color-blue-100: #dceefe;
+  --color-blue-200: #badcfd;
+  --color-blue-300: #97c9fc;
+  --color-blue-400: #74b7fa;
+  --color-blue-500: #5CACEE;
+  --color-blue-600: #1C86EE;
+  --color-blue-700: #1472CE;
+  --color-blue-800: #0f5bb0;
+  --color-blue-900: #0c488d;
+  --color-blue-950: #082d5a;
+}
+
+:root {
+  --theme-primary: #1C86EE;
+  --theme-secondary: #5CACEE;
+  --theme-canvas: #FFFFE8;
+  --theme-ink: #111827;
+}
+
+html,
+body,
+input,
+button,
+select,
+textarea {
+  font-family: 'Be Vietnam Pro', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+body {
+  background-color: #FFFFE8;
+  color: #111827;
+  font-family: 'Be Vietnam Pro', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #FFFDF0;
+}
+::-webkit-scrollbar-thumb {
+  background: #B4D7FA;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #5CACEE;
+}
