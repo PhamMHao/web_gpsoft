@@ -7,6 +7,7 @@
     "dev": "node --watch --watch-path=server.ts --watch-path=server --disable-warning=ExperimentalWarning --import tsx server.ts",
     "build": "node ./node_modules/vite/bin/vite.js build",
     "start": "node --disable-warning=ExperimentalWarning --import tsx server.ts",
+    "prod": "node -e \"process.env.NODE_ENV='production'; require('child_process').execSync('npm run start',{stdio:'inherit',env:process.env})\"",
     "preview": "node ./node_modules/vite/bin/vite.js preview",
     "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
     "lint": "node ./node_modules/typescript/bin/tsc --noEmit",
