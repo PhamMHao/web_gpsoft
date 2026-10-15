@@ -45,6 +45,23 @@ chmod +x setup-prod.sh
 
 ---
 
+## 🔄 Cập Nhật Code Mới Trên Server (Auto-Update)
+
+Khi bạn có commit mới trên GitHub và muốn cập nhật máy chủ mà không cần làm thủ công:
+
+Chỉ cần mở **PowerShell** trong thư mục dự án và chạy:
+```powershell
+.\update-server.ps1
+```
+
+Script sẽ tự động:
+1. Kéo code mới nhất từ GitHub (`git pull origin main`)
+2. Cài đặt thêm thư viện mới nếu có (`npm install`)
+3. Tự động build lại giao diện production (`npm run build`)
+4. Khởi động lại dịch vụ server (tự động phát hiện PM2 hoặc giải phóng cổng 3100 để chạy bản mới).
+
+---
+
 ## 🛠️ Chạy Thủ Công Bằng Lệnh (Manual)
 
 Nếu bạn muốn tự chạy từng bước:
