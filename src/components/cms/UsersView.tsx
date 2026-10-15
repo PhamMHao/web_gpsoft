@@ -78,23 +78,31 @@ export const UsersView: React.FC = () => {
     try {
       setSaving(true);
       if (editing) {
-        const res = await api.updateUser(editing.id, {
+        const payload: any = {
           username: form.username.trim(),
           fullName: form.fullName.trim(),
           email: form.email.trim(),
           role: form.role
-        });
+        };
+        if (form.password && form.password.trim()) {
+          payload.password = form.password.trim();
+        }
+        const res = await api.updateUser(editing.id, payload);
         if (res.success) {
           setUsers(prev => prev.map(u => (u.id === editing.id ? res.data : u)));
           showToast('Cập nhật người dùng thành công!', 'success');
         }
       } else {
-        const res = await api.createUser({
+        const payload: any = {
           username: form.username.trim().toLowerCase(),
           fullName: form.fullName.trim(),
           email: form.email.trim(),
           role: form.role
-        });
+        };
+        if (form.password && form.password.trim()) {
+          payload.password = form.password.trim();
+        }
+        const res = await api.createUser(payload);
         if (res.success) {
           setUsers(prev => [...prev, res.data]);
           showToast('Tạo tài khoản quản trị mới thành công!', 'success');
@@ -319,18 +327,18 @@ export const UsersView: React.FC = () => {
                 />
               </div>
 
-              {!editing && (
-                <div className="space-y-1">
-                  <label className="font-bold text-slate-700">Mật khẩu ban đầu</label>
-                  <input
-                    type="password"
-                    placeholder="••••••••"
-                    value={form.password}
-                    onChange={e => setForm({ ...form, password: e.target.value })}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-hidden"
-                  />
-                </div>
-              )}
+              <div className="space-y-1">
+                <label className="font-bold text-slate-700">
+                  {editing ? 'Mật khẩu mới (bỏ trống nếu không đổi)' : 'Mật khẩu ban đầu (mặc định 123456 nếu bỏ trống)'}
+                </label>
+                <input
+                  type="password"
+                  placeholder="••••••••"
+                  value={form.password}
+                  onChange={e => setForm({ ...form, password: e.target.value })}
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-hidden"
+                />
+              </div>
 
               <div className="space-y-1">
                 <label className="font-bold text-slate-700">Vai trò phân quyền</label>

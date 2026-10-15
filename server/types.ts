@@ -238,9 +238,12 @@ export interface Banner {
 export interface MenuItem {
   id: string;
   label: string;
+  title?: string;
   url: string;
   icon?: string;
   target?: string;
+  sortOrder?: number;
+  isExternal?: boolean;
   children?: Array<{ id: string; label: string; url: string }>;
 }
 

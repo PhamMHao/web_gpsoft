@@ -28,6 +28,7 @@ export const CategoriesBrandsView: React.FC = () => {
     icon: 'Layers',
     sortOrder: 1,
     description: '',
+    parentId: '',
     isActive: true
   });
 
@@ -53,6 +54,7 @@ export const CategoriesBrandsView: React.FC = () => {
       icon: 'Layers',
       sortOrder: categories.length + 1,
       description: '',
+      parentId: '',
       isActive: true
     });
     setCatModalOpen(true);
@@ -66,6 +68,7 @@ export const CategoriesBrandsView: React.FC = () => {
       icon: c.icon || 'Layers',
       sortOrder: c.sortOrder,
       description: c.description || '',
+      parentId: c.parentId || '',
       isActive: c.isActive
     });
     setCatModalOpen(true);
@@ -75,12 +78,13 @@ export const CategoriesBrandsView: React.FC = () => {
     e.preventDefault();
     if (!catForm.name.trim()) return;
     try {
-      const payload = {
+      const payload: Partial<Category> = {
         name: catForm.name,
         slug: catForm.slug || slugify(catForm.name),
         icon: catForm.icon,
         sortOrder: Number(catForm.sortOrder),
         description: catForm.description,
+        parentId: catForm.parentId || undefined,
         isActive: catForm.isActive
       };
       if (editingCat) {
@@ -240,7 +244,17 @@ export const CategoriesBrandsView: React.FC = () => {
                 {categories.map(c => (
                   <tr key={c.id} className="hover:bg-slate-50/70">
                     <td className="py-3 px-4 text-center font-bold text-slate-500">{c.sortOrder}</td>
-                    <td className="py-3 px-4 font-bold text-slate-900">{c.name}</td>
+                    <td className="py-3 px-4 font-bold text-slate-900">
+                      <div className="flex items-center gap-1.5">
+                        {c.parentId && <span className="text-slate-400 font-mono">└─</span>}
+                        <span>{c.name}</span>
+                      </div>
+                      {c.parentId && (
+                        <div className="text-[10px] text-slate-400 font-normal">
+                          Con của: {categories.find(p => p.id === c.parentId)?.name || c.parentId}
+                        </div>
+                      )}
+                    </td>
                     <td className="py-3 px-4 font-mono text-slate-500">{c.slug}</td>
                     <td className="py-3 px-4 font-mono text-blue-600">{c.icon || 'Layers'}</td>
                     <td className="py-3 px-4 text-center">
@@ -376,6 +390,24 @@ export const CategoriesBrandsView: React.FC = () => {
                     className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-hidden"
                   />
                 </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="font-bold text-slate-700">Thuộc danh mục cha (Cấp trên)</label>
+                <select
+                  value={catForm.parentId}
+                  onChange={e => setCatForm({ ...catForm, parentId: e.target.value })}
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:outline-hidden cursor-pointer"
+                >
+                  <option value="">-- Danh mục gốc (Cấp 1) --</option>
+                  {categories
+                    .filter(c => !editingCat || c.id !== editingCat.id)
+                    .map(c => (
+                      <option key={c.id} value={c.id}>
+                        {c.name}
+                      </option>
+                    ))}
+                </select>
               </div>
 
               <div className="space-y-1">

@@ -1511,6 +1511,32 @@ apiRouter.get('/menus', (_req: Request, res: Response) => {
   res.json({ success: true, data: db.getMenus() });
 });
 apiRouter.post('/menus', async (req: Request, res: Response) => {
+  // If request is for a single menu item (from CMS BannersMenuView)
+  if (req.body.url !== undefined) {
+    const loc = req.body.position === 'footer' ? 'footer' : 'header';
+    let targetMenu = db.getMenus().find(m => m.location === loc);
+    if (!targetMenu) {
+      targetMenu = {
+        id: `menu-${loc}`,
+        title: loc === 'header' ? 'Menu Chính Trên Cùng' : 'Menu Chân Trang Footer',
+        location: loc,
+        items: []
+      };
+      await db.addMenu(targetMenu);
+    }
+    const newItem = {
+      id: `mi-${Date.now()}`,
+      label: req.body.title || req.body.label || 'Liên kết mới',
+      title: req.body.title || req.body.label || 'Liên kết mới',
+      url: req.body.url || '/',
+      sortOrder: Number(req.body.sortOrder) || ((targetMenu.items || []).length + 1),
+      isExternal: Boolean(req.body.isExternal)
+    };
+    const items = [...(targetMenu.items || []), newItem];
+    await db.updateMenu(targetMenu.id, { items });
+    return res.status(201).json({ success: true, data: newItem });
+  }
+
   const m: Menu = {
     id: `menu-${Date.now()}`,
     title: req.body.title || 'Menu mới',
@@ -1521,10 +1547,75 @@ apiRouter.post('/menus', async (req: Request, res: Response) => {
   res.status(201).json({ success: true, data: m });
 });
 apiRouter.put('/menus/:id', async (req: Request, res: Response) => {
+  // Check if :id is a MenuItem inside any existing menu
+  let foundMenu: Menu | undefined;
+  let foundIndex = -1;
+  for (const m of db.getMenus()) {
+    const idx = (m.items || []).findIndex(item => item.id === req.params.id);
+    if (idx !== -1) {
+      foundMenu = m;
+      foundIndex = idx;
+      break;
+    }
+  }
+
+  if (foundMenu && foundIndex !== -1) {
+    const targetLoc = req.body.position || req.body.location;
+    const currentItem = foundMenu.items[foundIndex];
+    const updatedItem = {
+      ...currentItem,
+      label: req.body.title !== undefined ? req.body.title : (req.body.label !== undefined ? req.body.label : currentItem.label),
+      title: req.body.title !== undefined ? req.body.title : (req.body.label !== undefined ? req.body.label : currentItem.title),
+      url: req.body.url !== undefined ? req.body.url : currentItem.url,
+      sortOrder: req.body.sortOrder !== undefined ? Number(req.body.sortOrder) : currentItem.sortOrder,
+      isExternal: req.body.isExternal !== undefined ? Boolean(req.body.isExternal) : currentItem.isExternal
+    };
+
+    if (targetLoc && targetLoc !== foundMenu.location) {
+      foundMenu.items.splice(foundIndex, 1);
+      await db.updateMenu(foundMenu.id, { items: foundMenu.items });
+
+      let newMenu = db.getMenus().find(m => m.location === targetLoc);
+      if (!newMenu) {
+        newMenu = {
+          id: `menu-${targetLoc}`,
+          title: targetLoc === 'header' ? 'Menu Chính Trên Cùng' : 'Menu Chân Trang Footer',
+          location: targetLoc,
+          items: []
+        };
+        await db.addMenu(newMenu);
+      }
+      newMenu.items.push(updatedItem);
+      await db.updateMenu(newMenu.id, { items: newMenu.items });
+    } else {
+      foundMenu.items[foundIndex] = updatedItem;
+      await db.updateMenu(foundMenu.id, { items: foundMenu.items });
+    }
+    return res.json({ success: true, data: updatedItem });
+  }
+
   const updated = await db.updateMenu(req.params.id, req.body);
   res.json({ success: true, data: updated });
 });
 apiRouter.delete('/menus/:id', async (req: Request, res: Response) => {
+  // Check if :id is a MenuItem inside any existing menu
+  let foundMenu: Menu | undefined;
+  let foundIndex = -1;
+  for (const m of db.getMenus()) {
+    const idx = (m.items || []).findIndex(item => item.id === req.params.id);
+    if (idx !== -1) {
+      foundMenu = m;
+      foundIndex = idx;
+      break;
+    }
+  }
+
+  if (foundMenu && foundIndex !== -1) {
+    foundMenu.items.splice(foundIndex, 1);
+    await db.updateMenu(foundMenu.id, { items: foundMenu.items });
+    return res.json({ success: true, message: 'Đã xóa liên kết menu.' });
+  }
+
   await db.deleteMenu(req.params.id);
   res.json({ success: true, message: 'Đã xóa menu.' });
 });
@@ -1657,9 +1748,10 @@ apiRouter.put('/seo', async (req: Request, res: Response) => {
    USERS & ROLES
    ========================================================================= */
 apiRouter.get('/users', (_req: Request, res: Response) => {
-  res.json({ success: true, data: db.getUsers() });
+  res.json({ success: true, data: db.getUsers().map(sanitizeUser) });
 });
 apiRouter.post('/users', async (req: Request, res: Response) => {
+  const password = typeof req.body.password === 'string' && req.body.password.trim() ? req.body.password.trim() : '123456';
   const u: User = {
     id: `usr-${Date.now()}`,
     username: req.body.username,
@@ -1668,14 +1760,20 @@ apiRouter.post('/users', async (req: Request, res: Response) => {
     avatar: req.body.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
     role: req.body.role || 'staff',
     permissions: req.body.permissions || ['products.view', 'orders.view'],
+    passwordHash: bcrypt.hashSync(password, 10),
     createdAt: new Date().toISOString()
   };
   await db.addUser(u);
-  res.status(201).json({ success: true, data: u });
+  res.status(201).json({ success: true, data: sanitizeUser(u) });
 });
 apiRouter.put('/users/:id', async (req: Request, res: Response) => {
-  const updated = await db.updateUser(req.params.id, req.body);
-  res.json({ success: true, data: updated });
+  const updates: any = { ...req.body };
+  if (typeof updates.password === 'string' && updates.password.trim()) {
+    updates.passwordHash = bcrypt.hashSync(updates.password.trim(), 10);
+  }
+  delete updates.password;
+  const updated = await db.updateUser(req.params.id, updates);
+  res.json({ success: true, data: updated ? sanitizeUser(updated) : null });
 });
 apiRouter.delete('/users/:id', async (req: Request, res: Response) => {
   await db.deleteUser(req.params.id);
