@@ -184,7 +184,7 @@ export const HomePage: React.FC = () => {
             <Wrench className="w-6 h-6" />
           </div>
           <div>
-            <div className="text-xs sm:text-sm font-bold text-slate-900">ThinkPro Care VIP</div>
+            <div className="text-xs sm:text-sm font-bold text-slate-900">GPSOFT Care VIP</div>
             <div className="text-[11px] text-slate-500">Vệ sinh & tra keo miễn phí trọn đời</div>
           </div>
         </div>

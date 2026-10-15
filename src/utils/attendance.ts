@@ -113,7 +113,7 @@ export const ATTENDANCE_TABS: AttendanceTab[] = [
       'Bảng công realtime'
     ],
     description: [
-      'ThinkPro Attendance ghi nhận giờ vào/ra theo ca, theo vị trí và theo từng máy chấm công đặt tại showroom, văn phòng hay kho vận. Nhân viên văn phòng chấm bằng khuôn mặt, nhân viên kỹ thuật chấm bằng vân tay/thẻ từ, nhân viên kinh doanh chấm bằng QR động kèm GPS và ảnh xác thực.',
+      'GPSOFT Attendance ghi nhận giờ vào/ra theo ca, theo vị trí và theo từng máy chấm công đặt tại showroom, văn phòng hay kho vận. Nhân viên văn phòng chấm bằng khuôn mặt, nhân viên kỹ thuật chấm bằng vân tay/thẻ từ, nhân viên kinh doanh chấm bằng QR động kèm GPS và ảnh xác thực.',
       'Dữ liệu công được tổng hợp realtime thành bảng công tháng: tự động trừ giờ đi muộn, cộng giờ làm thêm (OT), tính công ngày lễ và đẩy thẳng sang module Tiền lương để tính lương — không cần nhập tay bằng Excel.'
     ],
     metrics: [
@@ -225,7 +225,7 @@ export const ATTENDANCE_TABS: AttendanceTab[] = [
     faqs: [
       {
         q: 'Doanh nghiệp đang dùng máy chấm công cũ có phải thay không?',
-        a: 'Không. ThinkPro Attendance kết nối trực tiếp các dòng máy phổ biến (ZKTeco, Hikvision, Ronald Jack), đọc dữ liệu thô rồi đồng bộ hai chiều về hệ thống nên bạn giữ nguyên thiết bị đã đầu tư.'
+        a: 'Không. GPSOFT Attendance kết nối trực tiếp các dòng máy phổ biến (ZKTeco, Hikvision, Ronald Jack), đọc dữ liệu thô rồi đồng bộ hai chiều về hệ thống nên bạn giữ nguyên thiết bị đã đầu tư.'
       },
       {
         q: 'Nhân viên đi thị trường chấm công bằng cách nào?',
@@ -240,7 +240,7 @@ export const ATTENDANCE_TABS: AttendanceTab[] = [
         a: 'Dữ liệu lưu trên SQLite, MySQL hoặc SQL Server của doanh nghiệp (hoặc cloud GPSOFT). Bảng công, bảng OT và lịch sử điểm danh luôn xuất được ra Excel/CSV để lưu trữ hoặc gửi kiểm toán.'
       }
     ],
-    cmsContent: `ThinkPro Attendance chấm công cho toàn bộ showroom, văn phòng, kho vận và nhân viên đi thị trường trên một hệ thống duy nhất.
+    cmsContent: `GPSOFT Attendance chấm công cho toàn bộ showroom, văn phòng, kho vận và nhân viên đi thị trường trên một hệ thống duy nhất.
 
 Nhân viên chấm công bằng khuôn mặt AI, vân tay, thẻ từ, mã QR động trên app hoặc GPS/WiFi tuỳ vị trí làm việc. Mọi lượt chấm công đều được xác thực chống chấm công hộ và ghi lại ảnh, toạ độ cùng thời điểm.
 

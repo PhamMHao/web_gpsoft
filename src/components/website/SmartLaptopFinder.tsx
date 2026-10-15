@@ -136,7 +136,7 @@ export const SmartLaptopFinder: React.FC<FinderProps> = ({ products }) => {
         <div className="space-y-1">
           <div className="flex items-center gap-2 text-xs font-bold text-[#1C86EE] uppercase tracking-wider">
             <Sparkles className="w-4 h-4 text-[#5CACEE]" />
-            <span>Trợ Lý Chọn Máy Thông Minh ThinkPro Experience</span>
+            <span>Trợ Lý Chọn Máy Thông Minh GPSOFT Experience</span>
           </div>
           <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
             Tìm Thiết Bị Công Nghệ Đúng Gu Của Bạn

@@ -196,7 +196,7 @@ export const AttendanceSoftwarePage: React.FC = () => {
             <div className="lg:col-span-7 space-y-5">
               <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#1C86EE]/10 text-[#1C86EE] text-[11px] font-bold uppercase tracking-wider">
                 <Sparkles className="w-3.5 h-3.5" />
-                ThinkPro Software · {ATTENDANCE_MODULE_LABEL}
+                GPSOFT Software · {ATTENDANCE_MODULE_LABEL}
               </span>
               <h1 className="text-2xl sm:text-4xl font-black text-slate-900 leading-tight">
                 {tab.cmsTitle}
@@ -634,7 +634,7 @@ export const AttendanceSoftwarePage: React.FC = () => {
               </h2>
             </div>
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-              Chưa thấy câu trả lời bạn cần? Gọi trực tiếp cho chuyên viên ThinkPro Software hoặc để lại
+              Chưa thấy câu trả lời bạn cần? Gọi trực tiếp cho chuyên viên GPSOFT Software hoặc để lại
               số điện thoại trong form demo — chúng tôi phản hồi trong 15 phút làm việc.
             </p>
             <a
@@ -683,13 +683,13 @@ export const AttendanceSoftwarePage: React.FC = () => {
             <div className="lg:col-span-7 space-y-4">
               <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/15 text-[11px] font-bold uppercase tracking-wider">
                 <Sparkles className="w-3.5 h-3.5" />
-                ThinkPro Software
+                GPSOFT Software
               </span>
               <h2 className="text-lg sm:text-2xl font-black leading-tight">
                 Sẵn sàng số hoá {tab.label.toLowerCase()} cho doanh nghiệp của bạn?
               </h2>
               <p className="text-xs sm:text-sm text-white/85 leading-relaxed">
-                Đội ngũ ThinkPro Software khảo sát quy trình hiện tại, cấu hình bản demo theo đúng dữ liệu
+                Đội ngũ GPSOFT Software khảo sát quy trình hiện tại, cấu hình bản demo theo đúng dữ liệu
                 nhân sự và ca làm việc của bạn trong 48 giờ. Miễn phí, không ràng buộc hợp đồng.
               </p>
               <div className="flex flex-wrap gap-3 pt-1">

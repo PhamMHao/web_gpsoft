@@ -80,7 +80,7 @@ export const Navbar: React.FC = () => {
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1.5 text-white">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <strong>ThinkPro Experience:</strong> Hệ thống bán lẻ công nghệ chuyên sâu
+              <strong>{settings?.companyName || 'GPSOFT'}:</strong> Hệ thống bán lẻ công nghệ chuyên sâu
             </span>
             <span className="text-slate-600">•</span>
             <span>⚡ Giao siêu tốc 2H</span>

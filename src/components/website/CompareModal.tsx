@@ -46,7 +46,7 @@ export const CompareModal: React.FC = () => {
           <div>
             <div className="flex items-center gap-2">
               <span className="px-2.5 py-0.5 rounded-full bg-[#1C86EE]/15 text-[#1C86EE] text-[11px] font-bold uppercase tracking-wider">
-                ThinkPro Compare Tool
+                GPSOFT Compare Tool
               </span>
               <span className="text-xs text-slate-400">({compareList.length}/4 sản phẩm)</span>
             </div>
